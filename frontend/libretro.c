@@ -492,6 +492,14 @@ void plat_trigger_vibrate(int pad, int low, int high)
 
    if (in_enable_vibration)
    {
+      if(high <= 0x80)
+      {
+        system("echo 1000000 > /sys/class/pwm/pwmchip0/pwm0/duty_cycle");
+      }
+      else
+      {
+        system("echo 10 > /sys/class/pwm/pwmchip0/pwm0/duty_cycle");
+      }
       rumble_cb(pad, RETRO_RUMBLE_STRONG, high << 8);
       rumble_cb(pad, RETRO_RUMBLE_WEAK, low ? 0xffff : 0x0);
    }
